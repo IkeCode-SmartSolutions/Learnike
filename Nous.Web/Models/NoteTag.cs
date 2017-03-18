@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Nous.Web.Models
 {
-    public class Attachment : BaseFileModel
+    public class NoteTag
     {
-        [Required]
-        public string RelativePath { get; set; }
-        public string Label { get; set; }
-
         public int NoteId { get; set; }
         public Note Note { get; set; }
+
+        public int TagId { get; set; }
+        public Tag Tag { get; set; }
     }
 }

@@ -1,9 +1,30 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Nous.Web.Models
 {
+    public static class BaseModelHelper
+    {
+        public static void ConfigureBaseModel<T>(this EntityTypeBuilder<T> entity, Action<EntityTypeBuilder<T>> configure = null)
+            where T : BaseModel
+        {
+            entity.Property(b => b.Created)
+                .HasDefaultValueSql("getutcdate()");
+            entity.Property(b => b.Updated)
+                .HasDefaultValueSql("getutcdate()");
+
+            entity.Configure(configure);
+        }
+
+        public static void Configure<T>(this EntityTypeBuilder<T> entity, Action<EntityTypeBuilder<T>> configure = null)
+            where T : class
+        {
+            configure?.Invoke(entity);
+        }
+    }
     public class BaseModel
     {
         [Key]

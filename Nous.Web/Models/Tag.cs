@@ -11,5 +11,7 @@ namespace Nous.Web.Models
         [Required]
         public string Name { get; set; }
         public string Color { get; set; }
+
+        public IEnumerable<NoteTag> Notes { get; set; }
     }
 }

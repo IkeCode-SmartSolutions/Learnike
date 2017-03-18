@@ -11,6 +11,8 @@ namespace Nous.Web.Data
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, CustomIdentityRole, int>
     {
         public DbSet<Book> Books { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<Attachment> Attachments { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -24,17 +26,20 @@ namespace Nous.Web.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
 
-            var book = builder.Entity<Book>();
-            book.Property(b => b.Created)
-                .HasDefaultValueSql("getutcdate()");
-            book.Property(b => b.Updated)
-                .HasDefaultValueSql("getutcdate()");
+            builder.Entity<Book>().ConfigureBaseModel((_) => { });
 
-            var note = builder.Entity<Note>();
-            note.Property(b => b.Created)
-                .HasDefaultValueSql("getutcdate()");
-            note.Property(b => b.Updated)
-                .HasDefaultValueSql("getutcdate()");
+            builder.Entity<Note>().ConfigureBaseModel((_) => { });
+
+            builder.Entity<Tag>().ConfigureBaseModel();
+
+            builder.Entity<NoteTag>().Configure((_) =>
+            {
+                _.HasKey(k => new { k.NoteId, k.TagId });
+                _.HasOne(i => i.Note).WithMany(i => i.Tags).HasForeignKey(t => t.NoteId);
+                _.HasOne(i => i.Tag).WithMany(i => i.Notes).HasForeignKey(t => t.TagId);
+            });
+
+            builder.Entity<Attachment>().ConfigureBaseModel();
         }
     }
 }

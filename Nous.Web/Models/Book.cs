@@ -20,6 +20,6 @@ namespace Nous.Web.Models
 
         public ApplicationUser User { get; set; }
 
-        public ICollection<Note> Notes { get; set; }
+        public IEnumerable<Note> Notes { get; set; }
     }
 }

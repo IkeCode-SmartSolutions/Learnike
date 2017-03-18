@@ -14,12 +14,14 @@ namespace Nous.Web.Models
         [Required]
         public string Text { get; set; }
 
+        public bool Favorite { get; set; }
+
         public int BookId { get; set; }
 
         public Book Book { get; set; }
 
-        public ICollection<Tag> Tags { get; set; }
+        public IEnumerable<NoteTag> Tags { get; set; }
 
-        public ICollection<Attachment> Attachments { get; set; }
+        public IEnumerable<Attachment> Attachments { get; set; }
     }
 }
