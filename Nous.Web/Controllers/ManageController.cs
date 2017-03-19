@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Nous.Web.Models;
-using Nous.Web.Models.ManageViewModels;
+using Nous.Models;
+using Nous.Models.ManageViewModels;
 using Nous.Web.Services;
 
 namespace Nous.Web.Controllers

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Nous.Web.Data;
-using Nous.Web.Models;
+using Nous.Data;
+using Nous.Models;
 using Nous.Web.Services;
 
 namespace Nous.Web

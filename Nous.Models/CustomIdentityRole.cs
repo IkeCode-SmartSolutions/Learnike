@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Nous.Web.Models
+namespace Nous.Models
 {
     public class CustomIdentityRole : IdentityRole<int>
     {

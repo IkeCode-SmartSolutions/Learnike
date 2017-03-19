@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Nous.Web.Models;
-using Nous.Web.Models.AccountViewModels;
+using Nous.Models;
+using Nous.Models.AccountViewModels;
 using Nous.Web.Services;
 
 namespace Nous.Web.Controllers

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Nous.Web.Models
+namespace Nous.Models
 {
     public class BaseFileModel : BaseModel
     {

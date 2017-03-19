@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Nous.Web.Models.AccountViewModels
+namespace Nous.Models.AccountViewModels
 {
     public class ResetPasswordViewModel
     {

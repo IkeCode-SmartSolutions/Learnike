@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Nous.Web.Data;
+using Nous.Data;
 
-namespace Nous.Web.Data.Migrations
+namespace Nous.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -97,7 +97,7 @@ namespace Nous.Web.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Nous.Web.Models.ApplicationUser", b =>
+            modelBuilder.Entity("Nous.Models.ApplicationUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -149,7 +149,7 @@ namespace Nous.Web.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Nous.Web.Models.Attachment", b =>
+            modelBuilder.Entity("Nous.Models.Attachment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -181,7 +181,7 @@ namespace Nous.Web.Data.Migrations
                     b.ToTable("Attachment");
                 });
 
-            modelBuilder.Entity("Nous.Web.Models.Book", b =>
+            modelBuilder.Entity("Nous.Models.Book", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -211,7 +211,7 @@ namespace Nous.Web.Data.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("Nous.Web.Models.CustomIdentityRole", b =>
+            modelBuilder.Entity("Nous.Models.CustomIdentityRole", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -234,7 +234,7 @@ namespace Nous.Web.Data.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("Nous.Web.Models.Note", b =>
+            modelBuilder.Entity("Nous.Models.Note", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -269,7 +269,7 @@ namespace Nous.Web.Data.Migrations
                     b.ToTable("Note");
                 });
 
-            modelBuilder.Entity("Nous.Web.Models.NoteTag", b =>
+            modelBuilder.Entity("Nous.Models.NoteTag", b =>
                 {
                     b.Property<int>("NoteId");
 
@@ -282,7 +282,7 @@ namespace Nous.Web.Data.Migrations
                     b.ToTable("NoteTag");
                 });
 
-            modelBuilder.Entity("Nous.Web.Models.Tag", b =>
+            modelBuilder.Entity("Nous.Models.Tag", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -308,7 +308,7 @@ namespace Nous.Web.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("Nous.Web.Models.CustomIdentityRole")
+                    b.HasOne("Nous.Models.CustomIdentityRole")
                         .WithMany("Claims")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -316,7 +316,7 @@ namespace Nous.Web.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("Nous.Web.Models.ApplicationUser")
+                    b.HasOne("Nous.Models.ApplicationUser")
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -324,7 +324,7 @@ namespace Nous.Web.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("Nous.Web.Models.ApplicationUser")
+                    b.HasOne("Nous.Models.ApplicationUser")
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -332,49 +332,49 @@ namespace Nous.Web.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("Nous.Web.Models.CustomIdentityRole")
+                    b.HasOne("Nous.Models.CustomIdentityRole")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Nous.Web.Models.ApplicationUser")
+                    b.HasOne("Nous.Models.ApplicationUser")
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Nous.Web.Models.Attachment", b =>
+            modelBuilder.Entity("Nous.Models.Attachment", b =>
                 {
-                    b.HasOne("Nous.Web.Models.Note", "Note")
+                    b.HasOne("Nous.Models.Note", "Note")
                         .WithMany("Attachments")
                         .HasForeignKey("NoteId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Nous.Web.Models.Book", b =>
+            modelBuilder.Entity("Nous.Models.Book", b =>
                 {
-                    b.HasOne("Nous.Web.Models.ApplicationUser", "User")
+                    b.HasOne("Nous.Models.ApplicationUser", "User")
                         .WithMany("Books")
                         .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Nous.Web.Models.Note", b =>
+            modelBuilder.Entity("Nous.Models.Note", b =>
                 {
-                    b.HasOne("Nous.Web.Models.Book", "Book")
+                    b.HasOne("Nous.Models.Book", "Book")
                         .WithMany("Notes")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Nous.Web.Models.NoteTag", b =>
+            modelBuilder.Entity("Nous.Models.NoteTag", b =>
                 {
-                    b.HasOne("Nous.Web.Models.Note", "Note")
+                    b.HasOne("Nous.Models.Note", "Note")
                         .WithMany("Tags")
                         .HasForeignKey("NoteId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Nous.Web.Models.Tag", "Tag")
+                    b.HasOne("Nous.Models.Tag", "Tag")
                         .WithMany("Notes")
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade);

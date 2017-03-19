@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Nous.Web.Models;
+using Nous.Models;
 
-namespace Nous.Web.Data
+namespace Nous.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, CustomIdentityRole, int>
     {
