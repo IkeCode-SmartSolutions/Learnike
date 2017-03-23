@@ -48,10 +48,12 @@ namespace Learnike.Api.Controllers
         /// <summary>
         /// Add new Book
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="book"></param>
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post([FromBody]Book book)
         {
+            _context.Add(book);
+            _context.SaveChanges();
         }
 
         /// <summary>
