@@ -13,9 +13,11 @@ namespace Learnike.Models
         public string Description { get; set; }
         
         public int ApplicationUserId { get; set; }
-
-        public ApplicationUser User { get; set; }
+        
+        protected ApplicationUser User { get; set; }
 
         public IEnumerable<Note> Notes { get; set; }
+
+        public IEnumerable<BookTag> Tags { get; set; }
     }
 }

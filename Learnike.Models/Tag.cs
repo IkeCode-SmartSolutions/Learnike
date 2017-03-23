@@ -10,5 +10,7 @@ namespace Learnike.Models
         public string Color { get; set; }
 
         public IEnumerable<NoteTag> Notes { get; set; }
+
+        public IEnumerable<BookTag> Books { get; set; }
     }
 }

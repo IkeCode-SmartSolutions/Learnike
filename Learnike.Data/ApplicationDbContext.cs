@@ -24,6 +24,13 @@ namespace Learnike.Data
 
             builder.Entity<Book>().ConfigureBaseModel((_) => { });
 
+            builder.Entity<BookTag>().Configure((_) =>
+            {
+                _.HasKey(k => new { k.BookId, k.TagId });
+                _.HasOne(i => i.Book).WithMany(i => i.Tags).HasForeignKey(t => t.BookId);
+                _.HasOne(i => i.Tag).WithMany(i => i.Books).HasForeignKey(t => t.TagId);
+            });
+
             builder.Entity<Note>().ConfigureBaseModel((_) => { });
 
             builder.Entity<Tag>().ConfigureBaseModel();
