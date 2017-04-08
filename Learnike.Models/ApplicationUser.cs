@@ -9,5 +9,7 @@ namespace Learnike.Models
         public string FullName { get; set; }
 
         public ICollection<Book> Books { get; set; }
+
+        public UserPlan UserPlan { get; set; }
     }
 }

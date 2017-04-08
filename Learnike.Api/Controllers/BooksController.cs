@@ -3,46 +3,59 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Learnike.Data;
 using Learnike.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Learnike.Api.Controllers
 {
     /// <summary>
-    /// Book operations
+    /// 'Book' operations
     /// </summary>
     [Route("api/[controller]")]
     public class BooksController : BaseApiController
     {
-        ApplicationDbContext _context;
+        IRepository<Book> _repository;
 
         /// <summary>
         /// Default constructor
         /// </summary>
-        /// <param name="context"></param>
-        public BooksController(ApplicationDbContext context)
+        /// <param name="repository"></param>
+        public BooksController(IRepository<Book> repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         /// <summary>
-        /// (async) Get books method
+        /// Get all Books
         /// </summary>
-        /// <returns>Task with books list</returns>
+        /// <returns>Book list</returns>
         [HttpGet]
         public IEnumerable<Book> Get()
         {
-            var books = _context.Books.ToList();
+            var books = _repository.Get(null, 0, 10, null);
+
             return books;
         }
 
         /// <summary>
-        /// 
+        /// Get specific Book
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns><see cref="Book"/> instance</returns>
+        /// <response code="200">Book found</response>
+        /// <response code="404">Book not found</response>
+        /// <response code="500">Oops! Internal server error detected!</response>
         [HttpGet("{id}")]
-        public string Get(int id)
+        [Produces(typeof(Book))]
+        [ProducesResponseType(typeof(Book), 200)]
+        [ProducesResponseType(typeof(void), 404)]
+        [ProducesResponseType(typeof(void), 500)]
+        public IActionResult Get(int id)
         {
-            return "value";
+            var result = _repository.Get(id, null);
+            if (result == null)
+                return NotFound();
+
+            return Json(result);
         }
 
         /// <summary>
@@ -52,18 +65,18 @@ namespace Learnike.Api.Controllers
         [HttpPost]
         public void Post([FromBody]Book book)
         {
-            _context.Add(book);
-            _context.SaveChanges();
+            _repository.Upsert(book);
         }
 
         /// <summary>
         /// Update a existing Book
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="value"></param>
+        /// <param name="book"></param>
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]Book book)
         {
+            _repository.Upsert(book);
         }
 
         /// <summary>
@@ -73,6 +86,7 @@ namespace Learnike.Api.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            _repository.Remove(id);
         }
     }
 }

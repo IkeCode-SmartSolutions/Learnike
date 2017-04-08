@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Learnike.Models;
+using System.Linq;
+using System;
+using System.Reflection;
 
 namespace Learnike.Data
 {
@@ -9,12 +12,13 @@ namespace Learnike.Data
         public DbSet<Book> Books { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
-        
+        public DbSet<Note> Notes { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
-
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -33,7 +37,7 @@ namespace Learnike.Data
 
             builder.Entity<Note>().ConfigureBaseModel((_) => { });
 
-            builder.Entity<Tag>().ConfigureBaseModel();
+            builder.Entity<Tag>().ConfigureBaseModel((_) => { });
 
             builder.Entity<NoteTag>().Configure((_) =>
             {
@@ -42,7 +46,7 @@ namespace Learnike.Data
                 _.HasOne(i => i.Tag).WithMany(i => i.Notes).HasForeignKey(t => t.TagId);
             });
 
-            builder.Entity<Attachment>().ConfigureBaseModel();
+            builder.Entity<Attachment>().ConfigureBaseModel((_) => { });
         }
     }
 }

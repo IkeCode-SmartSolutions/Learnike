@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Learnike.Models
 {
-    public class Note : BaseFileModel
+    [Revision]
+    public class Note : BaseModel
     {
         [Required]
         public string Title { get; set; }
@@ -13,6 +15,7 @@ namespace Learnike.Models
 
         public bool Favorite { get; set; }
 
+        [Required]
         public int BookId { get; set; }
 
         public Book Book { get; set; }

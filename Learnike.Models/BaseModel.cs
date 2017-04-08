@@ -11,11 +11,11 @@ namespace Learnike.Models
         public static void ConfigureBaseModel<T>(this EntityTypeBuilder<T> entity, Action<EntityTypeBuilder<T>> configure = null)
             where T : BaseModel
         {
-            entity.Property(b => b.Created)
-                .HasDefaultValueSql("getutcdate()");
-            entity.Property(b => b.Updated)
+            entity.Property(b => b.CreatedAt)
                 .HasDefaultValueSql("getutcdate()");
 
+            entity.HasKey(i => i.Id);
+            
             entity.Configure(configure);
         }
 
@@ -25,18 +25,21 @@ namespace Learnike.Models
             configure?.Invoke(entity);
         }
     }
+
     public class BaseModel
     {
-        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        
+        public int UID { get; set; }
 
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime Created { get; set; }
+        public int Revision { get; set; }
 
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime Updated { get; set; }
+        [DataType(DataType.DateTime)]
+        public DateTime CreatedAt { get; set; }
+
+        public EntryState EntryState { get; set; }
+
+        public ApplicationUser LockedBy { get; set; }
     }
 }
