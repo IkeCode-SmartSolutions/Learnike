@@ -26,7 +26,7 @@ namespace Learnike.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
 
-            builder.Entity<Book>().ConfigureBaseModel((_) => { });
+            builder.Entity<Book>().ConfigureBaseRevisionModel((_) => { });
 
             builder.Entity<BookTag>().Configure((_) =>
             {
@@ -35,7 +35,7 @@ namespace Learnike.Data
                 _.HasOne(i => i.Tag).WithMany(i => i.Books).HasForeignKey(t => t.TagId);
             });
 
-            builder.Entity<Note>().ConfigureBaseModel((_) => { });
+            builder.Entity<Note>().ConfigureBaseRevisionModel((_) => { });
 
             builder.Entity<Tag>().ConfigureBaseModel((_) => { });
 

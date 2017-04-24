@@ -5,8 +5,10 @@ using System.ComponentModel.DataAnnotations;
 namespace Learnike.Models
 {
     [Revision]
-    public class Note : BaseModel
+    public class Note : BaseModel, IBaseModelRevision
     {
+        public int Revision { get; set; }
+
         [Required]
         public string Title { get; set; }
 

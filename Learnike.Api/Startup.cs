@@ -61,6 +61,7 @@ namespace Learnike.Api
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(RevisionRepository<>));
 
             // Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(c =>

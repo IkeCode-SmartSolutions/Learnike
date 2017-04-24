@@ -6,40 +6,35 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Learnike.Models
 {
-    public static class BaseModelHelper
-    {
-        public static void ConfigureBaseModel<T>(this EntityTypeBuilder<T> entity, Action<EntityTypeBuilder<T>> configure = null)
-            where T : BaseModel
-        {
-            entity.Property(b => b.CreatedAt)
-                .HasDefaultValueSql("getutcdate()");
-
-            entity.HasKey(i => i.Id);
-            
-            entity.Configure(configure);
-        }
-
-        public static void Configure<T>(this EntityTypeBuilder<T> entity, Action<EntityTypeBuilder<T>> configure = null)
-            where T : class
-        {
-            configure?.Invoke(entity);
-        }
-    }
-
-    public class BaseModel
+    public class BaseModel : IBaseModel
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        
-        public int UID { get; set; }
-
-        public int Revision { get; set; }
 
         [DataType(DataType.DateTime)]
         public DateTime CreatedAt { get; set; }
 
-        public EntryState EntryState { get; set; }
+        [Required]
+        public ApplicationUser Owner { get; set; }
+        public int OwnerId { get; set; }
 
         public ApplicationUser LockedBy { get; set; }
+    }
+
+    public interface IBaseModel
+    {
+        int Id { get; set; }
+
+        DateTime CreatedAt { get; set; }
+
+        ApplicationUser Owner { get; set; }
+        int OwnerId { get; set; }
+
+        ApplicationUser LockedBy { get; set; }
+    }
+
+    public interface IBaseModelRevision
+    {
+        int Revision { get; set; }
     }
 }

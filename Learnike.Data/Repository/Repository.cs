@@ -8,12 +8,29 @@ using System.Text;
 
 namespace Learnike.Data
 {
+    public class RevisionRepository<T> : Repository<T>, IRepository<T>
+        where T : BaseRevisionModel
+    {
+        public RevisionRepository(ApplicationDbContext context)
+            : base(context)
+        {
+
+        }
+
+        protected override void OnRemove(T entity)
+        {
+            entity.Revision = -1;
+
+            entities.Update(entity);
+        }
+    }
+
     /// <inheritdoc/>
     public class Repository<T> : IRepository<T>
-        where T : BaseModel
+    where T : BaseModel
     {
-        private readonly ApplicationDbContext context;
-        private DbSet<T> entities;
+        protected readonly ApplicationDbContext context;
+        protected DbSet<T> entities;
 
         public Repository(ApplicationDbContext context)
         {
@@ -57,7 +74,8 @@ namespace Learnike.Data
 
 
             var query = entities
-                            .GroupBy(g => g.UID)
+                            .GroupBy(g => g.Id)
+                            .Where(i => i.Key == key)
                             .Select(i => i.OrderByDescending(o => o.Revision)
                                           .FirstOrDefault()
                                     );
@@ -65,6 +83,11 @@ namespace Learnike.Data
             var result = query.FirstOrDefault();
 
             return result;
+        }
+
+        protected virtual void OnRemove(T entity)
+        {
+            entities.Remove(entity);
         }
 
         public bool Remove(int key)
@@ -77,19 +100,7 @@ namespace Learnike.Data
 
             if (result)
             {
-                var revAttr = entity.GetType().GetTypeInfo().GetCustomAttribute<RevisionAttribute>(true);
-
-                if (revAttr != null)
-                {
-                    //A revisão fica negativa, indicando que temos um registro arquivado
-                    entity.Revision = -1;
-
-                    entities.Update(entity);
-                }
-                else
-                {
-                    entities.Remove(entity);
-                }
+                OnRemove(entity);
 
                 context.SaveChanges();
             }
@@ -105,11 +116,6 @@ namespace Learnike.Data
             if (item.Id == 0)
             {
                 entities.Add(item);
-
-                context.SaveChanges();
-
-                item.UID = item.Id;
-                entities.Update(item);
             }
             else
             {
@@ -117,8 +123,6 @@ namespace Learnike.Data
 
                 if (revAttr != null)
                 {
-                    item.UID = item.Id;
-                    item.Id = 0;
                     item.Revision += 1;
                     item.CreatedAt = DateTime.UtcNow;
 
